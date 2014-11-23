@@ -24,23 +24,23 @@
 // Request Object Definition
 module.exports = function request(req,res){
 
-	var method = req.method;
-	var URL = req.url.split('/');
-	var file = Supra.prefs.staticFiles+Supra.prefs.defaultStaticFile;
+  var method = req.method;
+  var URL = req.url.split('/');
+  var file = Supra.prefs.staticFiles+Supra.prefs.defaultStaticFile;
 
-	var reqUrl = req.url;
-
+  var reqUrl = req.url;
+  console.log(req.headers.cookie);
   Supra.Session.reset(req.headers.cookie);
 
-	if (reqUrl.indexOf('.') === -1){
-		reqUrl = Supra.prefs.defaultStaticFile || reqUrl + '/index.html';
-	}
+  if (reqUrl.indexOf('.') === -1){
+    reqUrl = Supra.prefs.defaultStaticFile || reqUrl + '/index.html';
+  }
 
-	file = Supra.prefs.staticFiles+reqUrl.replace(new RegExp('//','g'),'/');
+  file = Supra.prefs.staticFiles+reqUrl.replace(new RegExp('//','g'),'/');
 
-	result = new Supra.file(file,res,function(){
-		return new Supra.CustomRouter(req,res,method).checkRoutes();
-	})
+  result = new Supra.file(file,res,function(){
+    return new Supra.CustomRouter(req,res,method).checkRoutes();
+  })
 }
 
 
